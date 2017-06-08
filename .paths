@@ -8,5 +8,5 @@ export RBENVSHIMS="${HOME}/.rbenv/shims"
 export CHEFBIN="/opt/chefdk/bin"
 
 # Main paths
-export PATH="${CHEFBIN}:${RBENVSHIMS}:${CARGOBIN}:${GOBIN}:${GNUBIN}:${GOPATH}:${JAVA_HOME}/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:${PATH}"
+export PATH="${GNUBIN}:/usr/local/bin:${RBENVSHIMS}:${CARGOBIN}:${GOBIN}:${CHEFBIN}:${JAVA_HOME}/bin:/usr/local/sbin:/usr/bin:${PATH}"
 export MANPATH="${GNUMAN}:${MANPATH}"
