@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+red="\[\e[0;31m\]"
+green="\[\e[0;32m\]"
+yellow="\[\e[0;33m\]"
+cyan="\[\e[0;36m\]"
+white="\[\e[0;37;1m\]"
+normal="\[\e[0m\]"
+
+function safe_append_prompt_command {
+	# Append, don't overwrite
+	shopt -s histappend
+
+	local prompt_re
+
+	# Set OS dependent exact match regular expression
+	if [[ ${OSTYPE} == darwin* ]]; then
+		# macOS
+		prompt_re="[[:<:]]${1}[[:>:]]"
+	else
+		# Linux, FreeBSD, etc.
+		prompt_re="\<${1}\>"
+	fi
+
+	if [[ ${PROMPT_COMMAND} =~ ${prompt_re} ]]; then
+		return
+	elif [[ -z ${PROMPT_COMMAND} ]]; then
+		PROMPT_COMMAND="${1}"
+	else
+		PROMPT_COMMAND="${1};${PROMPT_COMMAND}"
+	fi
+
+	PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
+}
+
+D_DEFAULT_COLOR="${normal}"
+D_INTERMEDIATE_COLOR="${white}"
+D_USER_COLOR="${red}"
+D_MACHINE_COLOR="${cyan}"
+D_DIR_COLOR="${green}"
+D_CMDFAIL_COLOR="${red}"
+D_VIMSHELL_COLOR="${cyan}"
+
+# ------------------------------------------------------------------ FUNCTIONS
+case $TERM in
+	xterm*)
+		TITLEBAR="\033]0;\w\007"
+		;;
+	*)
+		TITLEBAR=""
+		;;
+esac
+
+is_vim_shell() {
+	if [ ! -z "$VIMRUNTIME" ];
+	then
+		echo "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}vim shell${D_DEFAULT_COLOR} "
+	fi
+}
+
+lastcommandfailed() {
+	code=$?
+	if [ $code != 0 ];
+	then
+		echo "${D_INTERMEDIATE_COLOR}exited ${D_CMDFAIL_COLOR}$code ${D_DEFAULT_COLOR}"
+	fi
+}
+
+# -------------------------------------------------------------- PROMPT OUTPUT
+prompt() {
+	local LAST_COMMAND_FAILED=$(lastcommandfailed)
+	local SAVE_CURSOR='\033[s'
+	local RESTORE_CURSOR='\033[u'
+	local MOVE_CURSOR_RIGHTMOST='\033[500C'
+	local MOVE_CURSOR_5_LEFT='\033[5D'
+
+	if [ "$(uname)" = "Linux" ];
+	then
+		PS1="${TITLEBAR}"
+		PS1+="${SAVE_CURSOR}${MOVE_CURSOR_RIGHTMOST}${MOVE_CURSOR_5_LEFT}"
+		PS1+="${RESTORE_CURSOR}"
+		PS1+="${D_USER_COLOR}\u ${D_INTERMEDIATE_COLOR}"
+		PS1+="at ${D_MACHINE_COLOR}\h ${D_INTERMEDIATE_COLOR}"
+		PS1+="in ${D_DIR_COLOR}\w ${D_INTERMEDIATE_COLOR}"
+		PS1+="${LAST_COMMAND_FAILED}"
+		PS1+="$(is_vim_shell)"
+		PS1+="\n${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
+	else
+		PS1="${TITLEBAR}"
+		PS1+="${D_USER_COLOR}\u ${D_INTERMEDIATE_COLOR}"
+		PS1+="at ${D_MACHINE_COLOR}\h ${D_INTERMEDIATE_COLOR}"
+		PS1+="in ${D_DIR_COLOR}\w ${D_INTERMEDIATE_COLOR}"
+		PS1+="${LAST_COMMAND_FAILED}"
+		PS1+="$(is_vim_shell)"
+		PS1+="\n${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
+	fi
+
+	PS2="${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
+}
+
+# Runs prompt
+safe_append_prompt_command prompt
