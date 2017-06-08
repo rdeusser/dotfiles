@@ -3,17 +3,22 @@
 system_type=$(uname -s)
 
 if [ "$system_type" = "Darwin" ]; then
-	# install homebrew if it's missing
+	# install Homebrew if it's missing
 	if ! command -v brew >/dev/null 2>&1; then
-		echo "Installing homebrew"
+		echo "Installing Homebrew"
 		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
 
 	if [ -f "$HOME/.Brewfile" ]; then
-		echo "Updating homebrew bundle"
+		echo "Updating Homebrew bundle"
 		brew bundle --global
 	fi
 
-	echo "Setting iTerm preference folder"
-	defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.iterm2"
+	if command -v vim >/dev/null 2>&1; then
+		echo "Bootstraping Vim"
+		vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+	fi
+
+	echo "Importing iTerm2 default profile"
+	defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.config/iterm2"
 fi
