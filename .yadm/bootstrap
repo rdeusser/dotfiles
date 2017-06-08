@@ -20,5 +20,6 @@ if [ "$system_type" = "Darwin" ]; then
 	fi
 
 	echo "Importing iTerm2 default profile"
-	defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.config/iterm2"
+	cp "$HOME/.config/iterm2/com.googlecode.iterm2.json" "$HOME/.iterm2/"
+	defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.iterm2/"
 fi
