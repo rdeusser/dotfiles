@@ -14,28 +14,37 @@ if [ "$system_type" = "Darwin" ]; then
 		brew bundle --global
 	fi
 
-	# bootstrap vim if vim is detected
-	if command -v vim >/dev/null 2>&1; then
-		echo "Bootstraping Vim"
-		vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
-	fi
-
 	echo "Importing iTerm2 default profile"
 	cp "$HOME/.config/iterm2/com.googlecode.iterm2.json" "$HOME/.iterm2/"
 	defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.iterm2/"
 
-	# install base16-builder if it's not already installed
-	if command -v base16-builder >/dev/null 2>&1; then
-		echo "Installing base16-builder"
-		npm install -g base16-builder
+elif [ "$system_type" = "Linux" ]; then
+	# install node and npm if it's missing
+	if ! command -v npm >/dev/null 2>&1; then
+		echo "Installation of npm on Linux currently isn't supported"
 	fi
-
-	echo "Building vim theme"
-	base16-builder -s "$HOME/.config/base16/glacier.yml" -t vim -b dark > "$HOME/.vim/colors/base16-glacier.vim"
-
-	echo "Building vim-airline theme"
-	base16-builder -s "$HOME/.config/base16/glacier.yml" -t vim-airline -b dark > "$HOME/.vim/autoload/airline/themes/base16-glacier.vim"
-
-	echo "Building shell theme"
-	base16-builder -s "$HOME/.config/base16/glacier.yml" -t shell -b dark > "$HOME/.config/base16/base16-glacier.dark.sh"
 fi
+
+# install base16-builder if it's not already installed
+if ! command -v base16-builder >/dev/null 2>&1; then
+	echo "Installing base16-builder"
+	npm install -g base16-builder
+fi
+
+# setup vim if we've got it
+if command -v vim >/dev/null 2>&1; then
+	echo "Bootstraping Vim"
+	vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+fi
+
+echo "Building vim theme"
+base16-builder -s "$HOME/.config/base16/glacier.yml" -t vim -b dark > "$HOME/.vim/colors/base16-glacier.vim"
+
+echo "Building vim-airline theme"
+base16-builder -s "$HOME/.config/base16/glacier.yml" -t vim-airline -b dark > "$HOME/.vim/autoload/airline/themes/base16-glacier.vim"
+
+echo "Building shell theme"
+base16-builder -s "$HOME/.config/base16/glacier.yml" -t shell -b dark > "$HOME/.config/base16/base16-glacier.dark.sh"
+
+# shellcheck source=/dev/null
+source ~/.bash_profile
