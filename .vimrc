@@ -582,7 +582,7 @@ let blacklist = ['markdown', 'md']
 autocmd BufWritePre * StripWhitespace
 
 " =================== vim-airline ========================
-let g:airline_theme = "base16-glacier"
+let g:airline_theme = "base16_glacier"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0

@@ -41,7 +41,7 @@ echo "Building vim theme"
 base16-builder -s "$HOME/.config/base16/glacier.yml" -t vim -b dark > "$HOME/.vim/colors/base16-glacier.vim"
 
 echo "Building vim-airline theme"
-base16-builder -s "$HOME/.config/base16/glacier.yml" -t vim-airline -b dark > "$HOME/.vim/autoload/airline/themes/base16-glacier.vim"
+base16-builder -s "$HOME/.config/base16/glacier.yml" -t vim-airline -b dark > "$HOME/.vim/autoload/airline/themes/base16_glacier.vim"
 
 echo "Building shell theme"
 base16-builder -s "$HOME/.config/base16/glacier.yml" -t shell -b dark > "$HOME/.config/base16/base16-glacier.dark.sh"

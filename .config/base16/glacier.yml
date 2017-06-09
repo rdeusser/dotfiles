@@ -2,8 +2,8 @@ scheme: "glacier"
 author: "Robert Deusser"
 base00: "0d151b" # Default Background
 base01: "0d151b" # Lighter Background (Used for status bars)
-base02: "cb392e" # Selection Background
-base03: "515d68" # Comments, Invisibles, Line Highlighting
+base02: "515d68" # Selection Background
+base03: "ffffff" # Comments, Invisibles, Line Highlighting
 base04: "515d68" # Dark Foreground (Used for status bars)
 base05: "515d68" # Default Foreground, Caret, Delimiters, Operators
 base06: "515d68" # Light Foreground (Not often used)
