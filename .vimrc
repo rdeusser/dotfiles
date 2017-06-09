@@ -8,7 +8,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'moll/vim-bbye'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'elixir-lang/vim-elixir'
@@ -119,22 +118,22 @@ set complete=.,w,b,u,t
 set completeopt=longest,menuone
 
 if &history < 1000
-    set history=50
+  set history=50
 endif
 
 if &tabpagemax < 50
-    set tabpagemax=50
+  set tabpagemax=50
 endif
 
 if !empty(&viminfo)
-    set viminfo^=!
+  set viminfo^=!
 endif
 
 if !&scrolloff
-    set scrolloff=1
+  set scrolloff=1
 endif
 if !&sidescrolloff
-    set sidescrolloff=5
+  set sidescrolloff=5
 endif
 set display+=lastline
 
@@ -144,13 +143,13 @@ inoremap <C-U> <C-G>u<C-U>
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
-    set mouse=a
+  set mouse=a
 endif
 
 " If linux then set ttymouse
 let s:uname = system("echo -n \"$(uname)\"")
 if !v:shell_error && s:uname == "Linux" && !has('nvim')
-    set ttymouse=xterm
+  set ttymouse=xterm
 endif
 
 " Convenient command to see the difference between the current buffer and the
@@ -164,43 +163,44 @@ endif
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
-    " Enable file type detection.
-    " Use the default filetype settings, so that mail gets 'tw' set to 72,
-    " 'cindent' is on in C files, etc.
-    " Also load indent files, to automatically do language-dependent indenting.
-    filetype plugin indent on
+  " Enable file type detection.
+  " Use the default filetype settings, so that mail gets 'tw' set to 72,
+  " 'cindent' is on in C files, etc.
+  " Also load indent files, to automatically do language-dependent indenting.
+  filetype plugin indent on
 
-    " Put these in an autocmd group, so that we can delete them easily.
-    augroup vimrcEx
-        au!
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+    au!
 
-        " For all text files set 'textwidth' to 120 characters.
-        autocmd FileType text setlocal textwidth=120
+    " For all text files set 'textwidth' to 120 characters.
+    autocmd FileType text setlocal textwidth=120
 
-        " When editing a file, always jump to the last known cursor position.
-        " Don't do it when the position is invalid or when inside an event handler
-        " (happens when dropping a file on gvim).
-        " Also don't do it when the mark is in the first line, that is the default
-        " position when opening a file.
-        autocmd BufReadPost *
-                    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-                    \	exe "normal! g`\"" |
-                    \ endif
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim).
+    " Also don't do it when the mark is in the first line, that is the default
+    " position when opening a file.
+    autocmd BufReadPost *
+          \ if line("'\"") > 1 && line("'\"") <= line("$") |
+          \	exe "normal! g`\"" |
+          \ endif
 
-    augroup END
+  augroup END
 else
 endif " has("autocmd")
 
 
 if has('gui_running')
-    set transparency=3
-    " fix js regex syntax
-    set regexpengine=1
+  set transparency=3
+  " fix js regex syntax
+  set regexpengine=1
 endif
+
 set background=dark
 let g:base16colorspace=256
 let g:enable_bold_font=1
-colorscheme base16-material-dark
+colorscheme base16-glacier
 let mapleader = ","
 let g:mapleader = ","
 
@@ -229,23 +229,23 @@ nnoremap <silent> <leader>q :Sayonara<CR>
 com! -nargs=1 -complete=file Breplace edit <args>| bdelete #
 
 function! DeleteInactiveBufs()
-    "From tabpagebuflist() help, get a list of all buffers in all tabs
-    let tablist = []
-    for i in range(tabpagenr('$'))
-        call extend(tablist, tabpagebuflist(i + 1))
-    endfor
+  "From tabpagebuflist() help, get a list of all buffers in all tabs
+  let tablist = []
+  for i in range(tabpagenr('$'))
+    call extend(tablist, tabpagebuflist(i + 1))
+  endfor
 
-    "Below originally inspired by Hara Krishna Dara and Keith Roberts
-    "http://tech.groups.yahoo.com/group/vim/message/56425
-    let nWipeouts = 0
-    for i in range(1, bufnr('$'))
-        if bufexists(i) && !getbufvar(i,"&mod") && index(tablist, i) == -1
-            "bufno exists AND isn't modified AND isn't in the list of buffers open in windows and tabs
-            silent exec 'bwipeout' i
-            let nWipeouts = nWipeouts + 1
-        endif
-    endfor
-    echomsg nWipeouts . ' buffer(s) wiped out'
+  "Below originally inspired by Hara Krishna Dara and Keith Roberts
+  "http://tech.groups.yahoo.com/group/vim/message/56425
+  let nWipeouts = 0
+  for i in range(1, bufnr('$'))
+    if bufexists(i) && !getbufvar(i,"&mod") && index(tablist, i) == -1
+      "bufno exists AND isn't modified AND isn't in the list of buffers open in windows and tabs
+      silent exec 'bwipeout' i
+      let nWipeouts = nWipeouts + 1
+    endif
+  endfor
+  echomsg nWipeouts . ' buffer(s) wiped out'
 endfunction
 
 command! Ball :call DeleteInactiveBufs()
@@ -336,16 +336,16 @@ let &t_EI .= "\<Esc>[?2004l"
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 function! XTermPasteBegin()
-    set pastetoggle=<Esc>[201~
-    set paste
-    return ""
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
 endfunction
 
 " set 120 character line limit
 if exists('+colorcolumn')
-    set colorcolumn=120
+  set colorcolumn=120
 else
-    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
 endif
 
 " ----------------------------------------- "
@@ -361,8 +361,8 @@ au BufNewFile,BufRead *.hpp setlocal expandtab ts=2 sw=2
 au BufNewFile,BufRead *.json setlocal expandtab ts=2 sw=2
 
 augroup filetypedetect
-    au BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
-    au BufNewFile,BufRead .nginx.conf*,nginx.conf* setf nginx
+  au BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
+  au BufNewFile,BufRead .nginx.conf*,nginx.conf* setf nginx
 augroup END
 
 au FileType nginx setlocal noet ts=4 sw=4 sts=4
@@ -370,13 +370,13 @@ au FileType nginx setlocal noet ts=4 sw=4 sts=4
 " Go settings
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 
-" scala settings
+" Scala settings
 autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
 
 " Markdown Settings
 autocmd BufNewFile,BufReadPost *.md setl ts=4 sw=4 sts=4 expandtab
 
-" lua settings
+" Lua settings
 autocmd BufNewFile,BufRead *.lua setlocal noet ts=4 sw=4 sts=4
 
 " Dockerfile settings
@@ -386,10 +386,13 @@ autocmd FileType dockerfile set noexpandtab
 autocmd FileType fstab,systemd set noexpandtab
 autocmd FileType gitconfig,sh,toml set noexpandtab
 
-" python indent
+" .vimrc settings
+autocmd BufNewFile,BufRead .vimrc setlocal tabstop=2 softtabstop=2 shiftwidth=2 textwidth=120 smarttab expandtab
+
+" Python indent
 autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120 smarttab expandtab
 
-" ruby indent
+" Ruby indent
 autocmd BufNewFile,BufRead *.rb setlocal tabstop=2 softtabstop=2 shiftwidth=2 textwidth=120 smarttab expandtab
 
 " Vagrantfile settings
@@ -401,7 +404,7 @@ autocmd BufNewFile,BufRead Berksfile setlocal filetype=ruby tabstop=2 softtabsto
 " Jenkinsfile settings
 autocmd BufNewFile,BufRead Jenkinsfile setlocal tabstop=2 softtabstop=2 shiftwidth=2 textwidth=120 smarttab expandtab
 
-" toml settings
+" Toml settings
 au BufRead,BufNewFile MAINTAINERS set ft=toml
 
 " spell check for git commits
@@ -446,11 +449,11 @@ let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_buftag_types = {'go' : '--language-force=go --golang-types=ftv'}
 
 func! MyCtrlPTag()
-    let g:ctrlp_prompt_mappings = {
-                \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-                \ 'AcceptSelection("t")': ['<c-t>'],
-                \ }
-    CtrlPBufTag
+  let g:ctrlp_prompt_mappings = {
+        \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
+        \ 'AcceptSelection("t")': ['<c-t>'],
+        \ }
+  CtrlPBufTag
 endfunc
 command! MyCtrlPTag call MyCtrlPTag()
 
@@ -503,17 +506,17 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 
 " neovim specific
 if has('nvim')
-    au FileType go nmap <leader>rt <Plug>(go-run-tab)
-    au FileType go nmap <Leader>rs <Plug>(go-run-split)
-    au FileType go nmap <Leader>rv <Plug>(go-run-vertical)
+  au FileType go nmap <leader>rt <Plug>(go-run-tab)
+  au FileType go nmap <Leader>rs <Plug>(go-run-split)
+  au FileType go nmap <Leader>rv <Plug>(go-run-vertical)
 endif
 
 " I like these more!
 augroup go
-    autocmd!
-    autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-    autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-    autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  autocmd!
+  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
 augroup END
 
 " ==================== delimitMate ====================
@@ -537,7 +540,7 @@ let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 if has('gui_running')
-    set guioptions-=L
+  set guioptions-=L
 endif
 
 " ==================== vim-json ====================
@@ -561,16 +564,16 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " Called once right before you start selecting multiple cursors
 function! Multiple_cursors_before()
-    if exists(':NeoCompleteLock')==2
-        exe 'NeoCompleteLock'
-    endif
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
 endfunction
 
 " Called once only when the multiple selection is canceled (default <Esc>)
 function! Multiple_cursors_after()
-    if exists(':NeoCompleteUnlock')==2
-        exe 'NeoCompleteUnlock'
-    endif
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
 endfunction
 
 " ========= vim-better-whitespace ==================
@@ -579,10 +582,12 @@ let blacklist = ['markdown', 'md']
 autocmd BufWritePre * StripWhitespace
 
 " =================== vim-airline ========================
-let g:airline_theme='hybrid'
+let g:airline_theme = "base16-glacier"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '>'
 
 " =================== YouCompleteMe ========================
 let g:ycm_key_list_select_completion=[]
@@ -591,7 +596,7 @@ let g:ycm_key_list_previous_completion=[]
 " set to use powerline fonts when not in a ssh session
 let g:remoteSession = ($STY == "")
 if !g:remoteSession
-    let g:airline_powerline_fonts=1
+  let g:airline_powerline_fonts=1
 endif
 
 " =================== vim-easy-align ========================

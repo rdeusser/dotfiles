@@ -5,7 +5,8 @@ HISTSIZE=500000
 HISTFILESIZE=1000000
 
 # shellcheck source=/dev/null
-BASE16_SHELL="$HOME/.config/base16-shell/base16-material.dark.sh"
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16/base16-glacier.dark.sh"
 # shellcheck source=/dev/null
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
