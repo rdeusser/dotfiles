@@ -8,6 +8,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'moll/vim-bbye'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'elixir-lang/vim-elixir'
@@ -27,6 +28,9 @@ Plug 'dougireton/vim-chef'
 Plug 'junegunn/vim-easy-align'
 Plug 'keith/rspec.vim'
 Plug 'tpope/vim-surround'
+Plug 'chriskempson/base16-vim'
+Plug 'hashivim/vim-terraform'
+Plug 'iamthemuffinman/seoul256.vim'
 
 call plug#end()
 
@@ -34,7 +38,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 if has('gui_running')
-  set guifont=Fira\ Mono\ for\ Powerline:h12
+  set guifont=Source\ Code\ Pro\ Semibold\ for\ Powerline:h13
 endif
 
 "
@@ -198,9 +202,8 @@ if has('gui_running')
 endif
 
 set background=dark
-let g:base16colorspace=256
-let g:enable_bold_font=1
-colorscheme base16-glacier
+let g:seoul256_background = 233
+colorscheme seoul256
 let mapleader = ","
 let g:mapleader = ","
 
@@ -402,13 +405,16 @@ autocmd BufNewFile,BufRead Vagrantfile setlocal filetype=ruby tabstop=2 softtabs
 autocmd BufNewFile,BufRead Berksfile setlocal filetype=ruby tabstop=2 softtabstop=2 shiftwidth=2 textwidth=120 smarttab expandtab
 
 " Jenkinsfile settings
-autocmd BufNewFile,BufRead Jenkinsfile setlocal tabstop=2 softtabstop=2 shiftwidth=2 textwidth=120 smarttab expandtab
+autocmd BufNewFile,BufRead Jenkinsfile setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120 smarttab expandtab
 
 " Toml settings
 au BufRead,BufNewFile MAINTAINERS set ft=toml
 
 " spell check for git commits
 autocmd FileType gitcommit setlocal spell
+
+" Terraform
+let g:terraform_align=1
 
 " Wildmenu completion {{{
 set wildmenu
@@ -482,12 +488,15 @@ let g:go_fmt_command = "goimports"
 let g:go_autodetect_gopath = 1
 let g:go_term_enabled = 1
 let g:go_snippet_engine = "neosnippet"
-let g:go_highlight_space_tab_error = 0
-let g:go_highlight_array_whitespace_error = 0
-let g:go_highlight_trailing_whitespace_error = 0
-let g:go_highlight_extra_types = 0
 let g:go_highlight_operators = 0
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
 
 
 au FileType go nmap <Leader>s <Plug>(go-def-split)
@@ -582,7 +591,7 @@ let blacklist = ['markdown', 'md']
 autocmd BufWritePre * StripWhitespace
 
 " =================== vim-airline ========================
-let g:airline_theme = "base16_glacier"
+let g:airline_theme = 'dark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0

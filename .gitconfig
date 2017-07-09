@@ -73,6 +73,10 @@
 	# a.k.a. ‘delete merged’
 	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d; git remote -v update -p"
 
+	# Remove branches that have already been merged with master locally as well as on the remote origin
+	# a.k.a. ‘delete merged’
+	dmp = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d; git remote -v update -p"
+
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
 
@@ -211,4 +215,9 @@
 
 [gc]
 
-	auto = 1024
+	auto = 0
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

@@ -27,9 +27,3 @@ source "${HOME}/.functions"
 # shellcheck source=/dev/null
 # Load prompt/theme
 source "${HOME}/.bash_prompt"
-
- # shellcheck source=/dev/null
-# Base16 Shell
-BASE16_SHELL="$HOME/.config/base16/base16-glacier.dark.sh"
-# shellcheck source=/dev/null
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL

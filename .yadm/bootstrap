@@ -38,13 +38,13 @@ if command -v vim >/dev/null 2>&1; then
 fi
 
 echo "Building vim theme"
-base16-builder -s "$HOME/.config/base16/glacier.yml" -t vim -b dark > "$HOME/.vim/colors/base16-glacier.vim"
+base16-builder -s ~/.config/base16/base16-spacemacs.yml -t vim -b dark > "$HOME/.vim/colors/base16-spacemacs.vim"
 
 echo "Building vim-airline theme"
-base16-builder -s "$HOME/.config/base16/glacier.yml" -t vim-airline -b dark > "$HOME/.vim/autoload/airline/themes/base16_glacier.vim"
+base16-builder -s ~/.config/base16/base16-spacemacs.yml -t vim-airline -b dark > "$HOME/.vim/autoload/airline/themes/base16_spacemacs.vim"
 
 echo "Building shell theme"
-base16-builder -s "$HOME/.config/base16/glacier.yml" -t shell -b dark > "$HOME/.config/base16/base16-glacier.dark.sh"
+base16-builder -s ~/.config/base16/base16-spacemacs.yml -t shell -b dark > "$HOME/.config/base16/base16-spacemacs.dark.sh"
 
 # shellcheck source=/dev/null
 source ~/.bash_profile
