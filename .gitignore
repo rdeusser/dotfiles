@@ -1,7 +1,8 @@
 # Ignore everything
 *
 
+!old/
 !.gitignore
 !.emacs.d/init.el
 !.config/fish/config.fish
-!old/
+!.config/terminal/Glacier.terminal
