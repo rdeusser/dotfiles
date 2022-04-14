@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+!.gitignore
+!.emacs.d/init.el
+!.config/fish/config.fish
+!old/
