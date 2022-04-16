@@ -2,6 +2,7 @@
 *
 
 !old/
+!Brewfile
 !.gitignore
 !.emacs.d/init.el
 !.config/fish/config.fish
